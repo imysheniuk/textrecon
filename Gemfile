@@ -38,7 +38,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'redis'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'devise'
 gem 'figaro'
 gem 'omniauth-facebook'
+gem 'httparty', '~> 0.13.1'
