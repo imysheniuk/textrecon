@@ -1,0 +1,18 @@
+<%= simple_form_for @message,
+  wrapper_mappings: {
+    check_boxes: :vertical_radio_and_checkboxes,
+    radio_buttons: :vertical_radio_and_checkboxes,
+    file: :vertical_file_input,
+    boolean: :vertical_boolean
+  } do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :to, as: :string, placeholder: 'Enter Number To Send' %>
+
+  <%= f.input :body, as: :text %>
+
+  <%= f.input :ttl, label: "Message TTL", as: :select, collection: (1..30).to_a %>
+
+   <%= f.button :submit %>
+<% end %>
+

@@ -1,19 +1,22 @@
 class Message
 
-  attr_accessor :body, :ttl
+  include ActiveModel::Model
+
+  attr_accessor :body, :ttl, :to
 
   def initialize(options = {})
     options = {
-      body: "",
-      ttl: 15
+      "body" => "",
+      "ttl" => 15
     }.merge(options)
 
-    @body = options[:body]
-    @ttl = options[:ttl]
+    @body = options["body"]
+    @ttl = options["ttl"]
   end
 
   def Message.find(id)
     message = REDIS.hgetall Message.message_key_for_id(id)
+    
     body = message["body"]
     ttl = message["ttl"].to_i
     unless REDIS.exists(Message.message_read_key(id))
@@ -27,6 +30,9 @@ class Message
   def save
     id = SecureRandom.hex(10)
     REDIS.hmset Message.message_key_for_id(id), "body", self.body, "ttl", ttl
+
+    puts REDIS.hgetall(Message.message_key_for_id(id)).inspect
+    puts Message.message_key_for_id(id)
     return id
   end
 

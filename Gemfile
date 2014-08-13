@@ -40,6 +40,7 @@ end
 
 gem 'redis'
 gem 'bootstrap-sass', '~> 3.1.1'
+gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'devise'
 gem 'figaro'
 gem 'omniauth-facebook'
