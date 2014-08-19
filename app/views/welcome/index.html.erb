@@ -11,7 +11,9 @@
 <div class="row">
   <div class="col-md-4">
   <h2> Last 5 messages sent </h2>
-  <%= @message %>
+  <% @messages.each do |message| %>
+     <%= message %>
+  <% end %>
 </div>
 </div>
 

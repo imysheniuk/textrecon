@@ -1,6 +1,6 @@
 Textrecon::Application.routes.draw do
   
-  resources :messages, only: [:new, :create, :show]
+  resources :messages, only: [:index, :new, :create, :show]
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
   get "welcome/about"
