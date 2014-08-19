@@ -14,6 +14,10 @@ class Message
     @ttl = options["ttl"]
   end
 
+  def Message.recent_messages
+    REDIS.lrange Message.global_key,0,4
+  end
+
   def Message.find(id)
     message = REDIS.hgetall Message.message_key_for_id(id)
     
@@ -30,10 +34,15 @@ class Message
   def save
     id = SecureRandom.hex(10)
     REDIS.hmset Message.message_key_for_id(id), "body", self.body, "ttl", ttl
-
+    REDIS.lpush Message.global_key, self.body
+    REDIS.ltrim Message.global_key, 0, 4
     puts REDIS.hgetall(Message.message_key_for_id(id)).inspect
     puts Message.message_key_for_id(id)
     return id
+  end
+
+  def Message.global_key
+    "recent_messages"
   end
 
   def Message.message_key_for_id(id = nil)
